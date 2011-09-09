@@ -2,6 +2,8 @@ require "minitest/autorun"
 require "em-http-request"
 require "em-http-metrics"
 
+require "em-http-metrics/csv"
+
 class Counter
   def initialize times, &block
     @times = times
@@ -25,6 +27,7 @@ describe Metrics do
       c = Counter.new SITES.length do
         EM.stop
         puts m
+        puts m.to_csv.string
       end
       EM::HttpRequest.use EventMachine::Middleware::Metrics, m
 
