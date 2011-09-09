@@ -15,10 +15,10 @@ class Counter
 end
 
 
-describe EventMachine::Metrics do
+describe Metrics do
   it "fetch a simple page" do
     EM.run do
-      m = EM::Metrics.new
+      m = Metrics::Metrics.new
 
       SITES = %w{www.google.com www.bing.com www.yahoo.com duckduckgo.com}
 

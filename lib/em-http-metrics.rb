@@ -1,7 +1,10 @@
-module EventMachine
+module Metrics
+  # Metrics storage object
   class Metrics < Array
   end
+end
 
+module EventMachine
   module Middleware
     class Metrics
 
