@@ -19,28 +19,21 @@ describe EventMachine::Metrics do
   it "fetch a simple page" do
     EM.run do
       m = EM::Metrics.new
-      c = Counter.new 2 do
+
+      SITES = %w{www.google.com www.bing.com www.yahoo.com duckduckgo.com}
+
+      c = Counter.new SITES.length do
         EM.stop
-        p m
+        puts m
       end
       EM::HttpRequest.use EventMachine::Middleware::Metrics, m
 
-      google = EventMachine::HttpRequest.new('http://google.com/')
-      hg = google.get
-      hg.errback { p 'Uh oh'; EM.stop }
-      hg.callback do
-        p "google", hg.response_header.status
-        c.next
+      SITES.each do |site|
+        conn = EventMachine::HttpRequest.new "http://#{site}"
+        http = conn.get
+        http.errback  { p '#{site} : Uh oh'; EM.stop }
+        http.callback { c.next }
       end
-
-      yahoo = EventMachine::HttpRequest.new 'http://yahoo.com'
-      hy = yahoo.get
-      hy.errback { p 'Yahoo Uh oh'; EM.stop }
-      hy.callback do
-        p "yahoo", hy.response_header.status
-        c.next
-      end
-
     end
   end
 end
