@@ -7,7 +7,6 @@ module EventMachine
 
       def initialize(metrics)
         @metrics = metrics
-        puts "initialized"
         @conn = {}
       end
 
@@ -19,10 +18,12 @@ module EventMachine
       def response(resp)
         timestamp = Time.new
         t = timestamp - @conn[resp.hash]
+        @conn.delete resp.hash
         @metrics << {
           :time      => t,
           :timestamp => timestamp,
-          :status    => resp.response_header.status
+          :status    => resp.response_header.status,
+          :uri       => resp.req.uri.to_s
         }
         resp
       end
