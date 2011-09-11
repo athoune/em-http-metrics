@@ -4,6 +4,9 @@ module Metrics
   end
 end
 
+# [TODO] choose what you store, with a block
+# [TODO] log live with a Redis
+
 module EventMachine
   module Middleware
     class Metrics
