@@ -11,6 +11,7 @@ Use it
 ------
 
 Metrics class handle all the values. The middleware is easy to use : you can use it on a specific connection, or globaly.
+
 ```ruby
 m = Metrics::Metrics.new
 EM::HttpRequest.use EventMachine::Middleware::Metrics, m
@@ -18,6 +19,7 @@ EM::HttpRequest.use EventMachine::Middleware::Metrics, m
 Do some requests.
 
 You can export it as a CSV :
+
 ```ruby
 require "em-http-metrics/csv"
 
